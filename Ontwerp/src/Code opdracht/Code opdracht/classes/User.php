@@ -67,19 +67,45 @@ class User {
         return $errors;
     }
 
-    public function loginUser(): bool {
-        $stmt = $this->conn->prepare("SELECT * FROM User WHERE username = :username");
+    // Nieuwe loginUser() methode met meldingen
+    public function loginUser(): array {
+        $result = [
+            'success' => false,
+            'message' => ''
+        ];
+
+        // Controleer of username en password zijn ingevuld
+        if (empty($this->username) || empty($this->password)) {
+            $result['message'] = 'Vul zowel username als wachtwoord in';
+            return $result;
+        }
+
+        // Haal user op uit de database
+        $stmt = $this->conn->prepare("SELECT * FROM User WHERE username = :username LIMIT 1");
         $stmt->bindParam(":username", $this->username);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && password_verify($this->password, $user['password'])) {
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['role'] = $user['role'];
-            return true;
+        // Controleer of gebruiker bestaat
+        if (!$user) {
+            $result['message'] = 'Gebruiker bestaat niet';
+            return $result;
         }
 
-        return false;
+        // Controleer wachtwoord
+        if (!password_verify($this->password, $user['password'])) {
+            $result['message'] = 'Wachtwoord is onjuist';
+            return $result;
+        }
+
+        // Login succesvol, sla gegevens op in session
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
+        $_SESSION['email'] = $user['email']; // optioneel
+
+        $result['success'] = true;
+        $result['message'] = 'Login succesvol';
+        return $result;
     }
 
     // Check of de user ingelogd is
