@@ -1,74 +1,75 @@
 <?php
-	// Functie: programma login OOP 
-    // Auteur: pascal petri
-	require_once('classes/User.php');
+// Functie: programma login OOP 
+// Auteur: Pascal Petri
 
-	$user = new User();
-	$errors=[];
+session_start();
+require_once('classes/User.php');
 
-	// Is de register button aangeklikt?
-	if(isset($_POST['register-btn'])){
-		
-		// Gegevens uit formulier halen
-		$user->username = $_POST['username'];
-		$user->setPassword($_POST['password']);
+$user = new User();
+$errors = [];
 
-		// Validatie gegevens
-		// Hoe???
+if (isset($_POST['register-btn'])) {
+    // Gegevens uit formulier halen
+    $user->username = trim($_POST['username']);
+    $user->email = trim($_POST['email']);
+    $user->setPassword($_POST['password']);
 
-		// Test of er geen errors zijn
-		if(count($errors) == 0){
-			// Register user
-			$errors = $user->registerUser();
-		}
-		
-		if(count($errors) > 0){
-			$message = "";
-			foreach ($errors as $error) {
-				$message .= $error . "\\n";
-			}
-			
-			echo "
-			<script>alert('" . $message . "')</script>
-			<script>window.location = 'register_form.php'</script>";
-		
-		} else {
-			echo "
-				<script>alert('" . "User registerd" . "')</script>
-				<script>window.location = 'login_form.php'</script>";
-		}
+    // Validatie
+    $errors = $user->validateUser();
 
-	}
+    if (empty($user->email) || !filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Ongeldig e-mailadres";
+    }
+
+    // Als er geen fouten zijn, registreer de gebruiker
+    if (count($errors) === 0) {
+        $errors = $user->registerUser();
+    }
+
+    // Resultaat
+    if (count($errors) > 0) {
+        echo '<div style="color:red;">';
+        foreach ($errors as $error) {
+            echo "<p>" . htmlspecialchars($error) . "</p>";
+        }
+        echo '</div>';
+    } else {
+        echo "
+            <script>alert('User registered')</script>
+            <script>window.location = 'login_form.php'</script>
+        ";
+        exit;
+    }
+}
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Registratie</title>
+</head>
 <body>
-	
+    <h3>PHP - PDO Login and Registration</h3>
+    <hr/>
 
-		<h3>PHP - PDO Login and Registration</h3>
-		<hr/>
+    <form method="POST">
+        <h4>Register here...</h4>
 
-			<form action="" method="POST">	
-				<h4>Register here...</h4>
-				<hr>
-				
-				<div>
-					<label>Username</label>
-					<input type="text"  name="username" />
-				</div>
-				<div >
-					<label>Password</label>
-					<input type="password"  name="password" />
-				</div>
-				<br />
-				<div>
-					<button type="submit" name="register-btn">Register</button>
-				</div>
-				<a href="index.php">Home</a>
-			</form>
+        <label>Username</label>
+        <input type="text" name="username" required>
+        <br>
 
+        <label>Email</label>
+        <input type="email" name="email" required>
+        <br>
 
+        <label>Password</label>
+        <input type="password" name="password" required>
+        <br><br>
+
+        <button type="submit" name="register-btn">Register</button>
+        <br>
+        <a href="login_form.php">Login</a>
+    </form>
 </body>
 </html>

@@ -1,76 +1,60 @@
 <?php
-	// Functie: programma login OOP 
-    // Auteur: pascal petri
+// Functie: programma login OOP 
+// Auteur: Pascal Petri
 
-    // Initialisatie
-	require_once('classes/User.php');
-	$user = new User();
-	$errors=[];	
-	
-	// Is de login button aangeklikt?
-	if(isset($_POST['login-btn']) ){
+session_start();
+require_once('classes/User.php');
 
+$user = new User();
+$errors = [];
 
-		$user->username = $_POST['username'];
-		$user->setPassword($_POST['password']);
+// Is de login button aangeklikt?
+if (isset($_POST['login-btn'])) {
+    $user->username = trim($_POST['username']);
+    $user->setPassword($_POST['password']);
 
-		$user->showUser();
+    $result = $user->loginUser();
 
-		// Validatie gegevens
-		$errors = $user->validateUser();
-
-		// Indien geen fouten dan inloggen
-		if(count($errors)== 0){
-			//Inlogen
-			if ($user->loginUser()){
-				echo "LOgin ok";
-				// Ga naar pagina??
-				header("location: index.php");
-			} else
-			{
-				array_push($errors, "Login mislukt");
-				echo "Login NOT ok";
-			}
-		}
-
-		if(count($errors) > 0){
-			$message = "";
-			foreach ($errors as $error) {
-				$message .= $error . "\\n";
-			}
-			
-			echo "
-			<script>alert('" . $message . "')</script>
-			<script>window.location = 'login_form.php'</script>";
-		
-		}
-		
-	}
+    if ($result['success']) {
+        header("Location: index.php");
+        exit;
+    } else {
+        $errors[] = $result['message'];
+    }
+}
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-	</head>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
 <body>
+    <h3>PHP - PDO Login and Registration</h3>
+    <hr/>
 
-	<h3>PHP - PDO Login and Registration</h3>
-	<hr/>
-	
-	<form action="" method="POST">	
-		<h4>Login here...</h4>
-		<hr>
-		
-		<label>Username</label>
-		<input type="text" name="username" />
-		<br>
-		<label>Password</label>
-		<input type="password" name="password" />
-		<br>
-		<button type="submit" name="login-btn">Login</button>
-		<br>
-		<a href="register_form.php">Registration</a>
-	</form>
-		
+    <form method="POST">
+        <h4>Login here...</h4>
+
+        <label>Username</label>
+        <input type="text" name="username" required>
+        <br>
+
+        <label>Password</label>
+        <input type="password" name="password" required>
+        <br><br>
+
+        <button type="submit" name="login-btn">Login</button>
+        <br>
+        <a href="register_form.php">Nog geen account? Registreer hier</a>
+    </form>
+
+    <?php if (!empty($errors)): ?>
+        <div style="color:red; margin-top:10px;">
+            <?php foreach ($errors as $error): ?>
+                <p><?= htmlspecialchars($error) ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 </body>
 </html>
