@@ -1,6 +1,6 @@
 <?php
 	// Functie: programma login OOP 
-    // Auteur: Studentnaam
+    // Auteur: pascal petri
 	require_once('classes/User.php');
 
 	$user = new User();
