@@ -1,0 +1,10 @@
+{
+    "name": "autoload/calculator",
+    "description": "Simpele calculator met autoload",
+    "autoload": {
+        "psr-4": {
+            "Autoload\\Calculator\\": "src/"
+        }
+    },
+    "require": {}
+}
