@@ -1,0 +1,198 @@
+/* style.css - Stijlen voor CRUD applicatie */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1, h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3498db;
+}
+
+nav {
+    background-color: #2c3e50;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #3498db;
+}
+
+.crud-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.crud-table th {
+    background-color: #3498db;
+    color: white;
+    text-align: left;
+    padding: 12px 15px;
+    font-weight: 600;
+}
+
+.crud-table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.crud-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.crud-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+form {
+    background-color: white;
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+button, .btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:hover, .btn:hover {
+    background-color: #2980b9;
+}
+
+.btn-wijzig {
+    background-color: #f39c12;
+}
+
+.btn-wijzig:hover {
+    background-color: #e67e22;
+}
+
+.btn-verwijder {
+    background-color: #e74c3c;
+}
+
+.btn-verwijder:hover {
+    background-color: #c0392b;
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 4px;
+    margin: 20px 0;
+}
+
+.alert-info {
+    background-color: #d9edf7;
+    border: 1px solid #bce8f1;
+    color: #31708f;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    border: 1px solid #d6e9c6;
+    color: #3c763d;
+}
+
+.alert-error {
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    color: #a94442;
+}
+
+.fiets-details {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+.fiets-details h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.fiets-details p {
+    margin-bottom: 8px;
+    padding-left: 10px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #3498db;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
