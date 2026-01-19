@@ -35,3 +35,22 @@ p {
     margin: 0.5rem 0;
     font-size: 1.1rem;
 }
+
+form {
+    margin-bottom: 1rem;
+}
+
+input {
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    background: #00796b;
+    color: white;
+    cursor: pointer;
+}
